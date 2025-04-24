@@ -8,8 +8,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float slowingFactor = 2;
     [SerializeField]
-    private float maxSpeed = 10;
-
+    private float maxWalkingSpeed = 10;
+    [SerializeField]
+    private float runningMultiplier = 2;
 
 
     private float currentSpeed = 0;
@@ -23,6 +24,9 @@ public class PlayerMovement : MonoBehaviour
     private float rotationX;
     private float rotationY;
     private float lookXLimit = 90;
+
+
+    private bool running = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -43,9 +47,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateMovementSpeed ()
     {
-        if (currentSpeed < maxSpeed)
+        float speedMult = running ? runningMultiplier : 1;
+        if (currentSpeed < maxWalkingSpeed * speedMult)
         {
-            currentSpeed += accelerationFactor * 0.2f;
+            currentSpeed += accelerationFactor * 0.2f * speedMult;
         }
     }
 
@@ -78,7 +83,18 @@ public class PlayerMovement : MonoBehaviour
         moveInput = context.ReadValue<Vector2>().normalized;
         if(moveInput.x == 0 && moveInput.y == 0)
         {
-            currentSpeed = maxSpeed/10f;
+            currentSpeed = maxWalkingSpeed/10f;
+        }
+    }
+
+    public void RunningButton(InputAction.CallbackContext context)
+    {
+        if(context.canceled)
+        {
+            running = false;
+        } else if (context.performed)
+        {
+            running = true;
         }
     }
 
