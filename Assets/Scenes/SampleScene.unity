@@ -700,7 +700,7 @@ Transform:
   m_GameObject: {fileID: 562042737}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.11, y: 1.3, z: 0.23}
+  m_LocalPosition: {x: -1.11, y: 2.07, z: 0.23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -715,7 +715,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 562042737}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -746,10 +746,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d12b83b32192ec47820a2a13288a0b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accelerationFactor: 1
+  accelerationFactor: 5
   slowingFactor: 2
-  maxWalkingSpeed: 10
+  maxWalkingSpeed: 5
   runningMultiplier: 2
+  jumpForce: 100
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 64
+  groundCheckSize: 0.22
+  groundCheckCenter: 0.84
 --- !u!114 &562042745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -779,7 +785,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 562042743}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: Moving
+        m_MethodName: MovePressed
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -820,7 +826,19 @@ MonoBehaviour:
     m_ActionId: 27c5f898-bc57-4ee1-8800-db469aca5fe3
     m_ActionName: 'Player/Crouch[/Keyboard/c]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 562042743}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: JumpPressed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: f1ba0d36-48eb-4cd5-b651-1c94a6531f70
     m_ActionName: 'Player/Jump[/Keyboard/space]'
   - m_PersistentCalls:
@@ -835,7 +853,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 562042743}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: RunningButton
+        m_MethodName: RunningPressed
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1169,7 +1187,7 @@ GameObject:
   - component: {fileID: 1638009351}
   - component: {fileID: 1638009350}
   - component: {fileID: 1638009349}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
